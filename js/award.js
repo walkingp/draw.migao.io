@@ -1,17 +1,12 @@
 window.award = [{
         name: 'Rocket Science',
-        award: 'Rocket Science胶衣（价值1300元）',
+        award: 'Rocket Science胶衣',
         count: 2,
     },
     {
         name: 'Rocket Science',
         award: 'Rocket Science泳镜',
         count: 5,
-    },
-    {
-        name: 'Rocket Science',
-        award: 'Rocket Science铁三背包',
-        count: 2,
     },
     {
         name: 'Rocket Science',
@@ -59,11 +54,6 @@ window.award = [{
         count: 10,
     },
     {
-        name: '岐力信息',
-        award: 'Nike Next%一双',
-        count: 1,
-    },
-    {
         name: 'Nike',
         award: 'Nike跑百巷袋子',
         count: 20,
@@ -97,5 +87,40 @@ window.award = [{
         name: '刚戈',
         award: 'NB 运动紧身裤男M',
         count: 10,
+    },
+    {
+        name: '清风',
+        award: 'SWING 八百流沙五周年火星站特别版',
+        count: 1,
+    },
+    {
+        name: '清风',
+        award: 'CTL国旗版休闲系列',
+        count: 1,
+    },
+    {
+        name: '母子鳄鱼',
+        award: '母子鳄鱼跑步拖鞋',
+        count: 1,
+    },
+    {
+        name: '母子鳄鱼',
+        award: '母子鳄鱼跑步袜子',
+        count: 1,
+    },
+    {
+        name: '李猛',
+        award: '长白山木耳',
+        count: 10,
+    },
+    {
+        name: '李猛',
+        award: '长白山林下参',
+        count: 1,
+    },
+    {
+        name: '岐力信息',
+        award: 'Nike Next%一双',
+        count: 1,
     },
 ]
