@@ -28,12 +28,12 @@
     </div>
     <div class="batch flexbox" v-show="!running && batchPlayers.length>0">
       <div class="player" v-for="(item, index) in batchPlayers" :key="index" @click="onKick(item)">
-        {{ item }}
+        {{ item.name }}
       </div>
     </div>
     <div class="result" v-show="batchPlayers.length===0">
       <div @click="onKick(item, index)" class="lucky-dog" v-for="(item, index) in result[currentAward]" :key="index">
-        {{ item }}
+        {{ item.name }}
       </div>
     </div>
     <div id="myCanvasContainer">
@@ -244,7 +244,7 @@
         console.log(this.rewards);
       },
       mounted: function () {
-        var members = JSON.parse(localStorage.getItem('members')) || window.members;
+        var members = JSON.parse(localStorage.getItem('members'));
         this.players = JSON.parse(localStorage.getItem('players')) || members;
         this.members = this.copy(members);
         localStorage.setItem('players', JSON.stringify(this.players));

@@ -130,6 +130,10 @@
             prop: 'award',
             label: '奖品',
           },
+          {
+            prop: 'val',
+            label: '价值',
+          },
         ],
         memberColumns: [{
             prop: 'name',
@@ -247,10 +251,11 @@
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning',
-          }).then(function () {
-            vm.memberSource = window.members.map(function (item, index) {
+          }).then(async function () {
+            var members = await this.getMembers();
+            vm.memberSource = members.map(function (item, index) {
               return {
-                name: item.name,
+                name: item,
                 id: index + 1,
                 editing: {},
               };
@@ -258,8 +263,9 @@
             vm.saveData();
           });
         },
-        saveData: function () {
-          var memebers = window.members.map(function (item, index) {
+        saveData: async function () {
+          var members = await this.getMembers();
+          memebers = members.map(function (item, index) {
             return {
               name: item,
               id: index + 1
@@ -268,22 +274,53 @@
           localStorage.setItem('awards', JSON.stringify(this.awards));
           localStorage.setItem('members', JSON.stringify(memebers));
         },
+        getMembers(){
+          return new Promise((resovle, reject) => {
+            fetch(`https://huate-8d8352.service.tcloudbase.com/api/v1.0/checkin`).then(function(response) {
+              return response.json();
+            })
+            .then(function(res) {
+              resovle(res.data.filter(item=>item.isConfirmed).map(item=>item.userInfo.nickName));
+            });
+          })
+        },
+        getGifts(){
+          return new Promise((resovle, reject) => {
+            fetch(`https://huate-8d8352.service.tcloudbase.com/api/v1.0/gifts`).then(function(response) {
+              return response.json();
+            })
+            .then(function(res) {
+              const gifts = res.data.sort((a, b) => a.order - b.order);
+              resovle(gifts.map(item=>{
+                return {
+                  name: item.provider,
+                  award: item.title,
+                  count: item.quanlity,
+                  val: item.value                
+                }
+              }));
+            });
+          })
+        },
       },
-      created: function () {
-        var awards = JSON.parse(localStorage.getItem('awards')) || window.award;
-        var members = JSON.parse(localStorage.getItem('members')) || window.members;
+      created: async function () {
+        var members = await this.getMembers();
+        var awards = await this.getGifts();
+        awards = awards || JSON.parse(localStorage.getItem('awards'));
+        members = members || JSON.parse(localStorage.getItem('members'));
         this.batchNumber = +localStorage.getItem('batchNumber') || 20;
         this.tableData = awards.map(function (item) {
           return {
             name: item.name,
             count: item.count,
             award: item.award,
+            val: item.val,   
             editing: {},
           };
         });
         this.memberSource = members.map(function (item, index) {
           return {
-            name: item.name,
+            name: item,
             id: index + 1,
             editing: {},
           };
